@@ -37,7 +37,7 @@ function createArticle(hit){
     author: hit.author,
     title: hit.title,
     storyTitle: hit.story_title,
-    date: hit.date
+    date: hit.created_at
 
   }, function (err, awesome_instance) {
     if (err) return handleError(err);

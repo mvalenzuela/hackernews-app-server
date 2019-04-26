@@ -1,6 +1,6 @@
 const Article = require('../models/article');
 
-exports.getAll = function (req, res) {
+exports.getAll = function (req, res, next) {
   Article.find({ deleted: false })
     .then(function (articles) {
       res.json(articles);
@@ -10,8 +10,9 @@ exports.getAll = function (req, res) {
 }
 
 exports.deleteOne = function (req, res) {
+  console.log(req.query);
   Article.findOne({
-    id: req.params.article_id
+    id: req.query.article_id
   }).then(( articleRecord) => {
     articleRecord.deleted = true;
     articleRecord.save();

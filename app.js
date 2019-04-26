@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var mongoose = require('mongoose')
 var schedule = require('node-schedule');
+var cors = require('cors');
 
 var uristring =
     process.env.MONGOLAB_URI ||
@@ -25,13 +26,14 @@ mongoose.connect(uristring, { useNewUrlParser: true }, function (err, res) {
     });
 
 const ArticleJob = require('./jobs/articleJob');
-var job = schedule.scheduleJob('*/1 * * * *', function(){
+var job = schedule.scheduleJob('0 0 */1 * * *', function(){
   ArticleJob.downloadArticles();
   console.log('The answer to life, the universe, and everything!');
 });
 
 var app = express();
 
+app.use(cors());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
