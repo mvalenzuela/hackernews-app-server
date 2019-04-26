@@ -13,7 +13,7 @@ var cors = require('cors');
 var uristring =
     process.env.MONGOLAB_URI ||
     process.env.MONGOHQ_URL ||
-    'mongodb://localhost/HelloMongoose';
+    'mongodb://localhost/HackerNewsDB';
 
 var theport = process.env.PORT || 5000;
 
@@ -26,9 +26,9 @@ mongoose.connect(uristring, { useNewUrlParser: true }, function (err, res) {
     });
 
 const ArticleJob = require('./jobs/articleJob');
+ArticleJob.downloadArticles();
 var job = schedule.scheduleJob('0 0 */1 * * *', function(){
   ArticleJob.downloadArticles();
-  console.log('The answer to life, the universe, and everything!');
 });
 
 var app = express();
